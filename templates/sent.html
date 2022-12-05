@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sent</title>
+</head>
+<body>
+    <div class="basic">
+        <p> Hello! Here we go again..</p>
+    </div>
+    <div calss="main_field">
+        <p>Choose language:</p>
+        <form action="/" id="send_code" method="post">
+            {% for a in langs %}<p>
+                    {{ a['name'] }}
+                    <input type="radio" name="language" value={{ a['id'] }}>
+            {% endfor %}</p>
+            <input type="text" id="Code" width="500px" height="700px" name = "Code" placeholder="Enter your code here">
+            <input type="text" name="in" placeholder="cin">
+            <textarea name = "qwerty" cols="200" rows="30"></textarea>
+            <button type="submit">Send for check</button>
+        </form>
+    </div>
+    <div class="response">
+        {{ rets }}
+    </div>
+</body>
+</html>
