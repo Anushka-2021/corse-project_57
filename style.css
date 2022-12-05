@@ -1,0 +1,14 @@
+.main_field {
+    margin: 10px;
+}
+#code_area {
+    max-width: 700px;
+    width: 500px;
+}
+.butt{
+    font-size: 24px;
+    text-color: #000000;
+    margin: 500px;
+    height: 20px;
+    border-radius: 5px;
+}
