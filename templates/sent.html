@@ -9,6 +9,11 @@
     <title>Sent</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <style>
+        header {
+            display: flex;
+            max-width: 100%;
+            background-color: grey;
+        }
         .main_field {
             margin: 10px;
         }
@@ -23,24 +28,27 @@
             border-radius: 5px;
         }
 
-        header{
-            display: flex;
-            max-width: 1800px;
-        }
-
         .info{
             display: inline-block;
         }
+
         button{
             width: 50px;
             height: 50px;
-            border-radius: 5px;
+        }
+
+        .login {
+            display: inline-block;
+            position: relative;
+            left: 85%;
+            width: 75px;
         }
 
         .menu{
             display: inline-block;
             position: relative;
-            left: 95%;
+            left: 85%;
+
         }
     </style>
 </head>
@@ -49,6 +57,9 @@
     <header>
         <div class="info">
             <p>Welcome, {{ uname }}username! </p>
+        </div>
+        <div class="login">
+            <button onckick="window.location.href = 'http://127.0.0.1:5000/login'">LogInfo</button>
         </div>
         <div class="menu">
             <button onclick="window.location.href = 'http://127.0.0.1:5000/person'">lk</button>

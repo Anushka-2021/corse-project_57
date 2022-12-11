@@ -6,26 +6,39 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+        table {
+            border: 1px solid;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th {
+            border: 1px solid;
+        }
+        button{
+            width: 250px;
+            height: 40px;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
+    <p>{{ data }}</p>
     <div class="stat">
         <p> You submitted {{ data }} tasks</p>
         <button onclick="window.location.href = 'http://127.0.0.1:5000/person/today'">See my today's progress</button>
     </div>
     <p>Your todays submissions:</p>
-    {{ datas }}
     <div class="table">
         {% for i in datas %}
             <table>
                 <tr>
-                    <th>token</th>
                     <th>lang</th>
                     <th>code</th>
                     <th>input</th>
                     <th>exp_output</th>
                     <th>output</th>
                     <th>time of decision</th>
-                    <th>day of decision</th>
                 </tr>
                 {% for j in i %}
                     <tr>
