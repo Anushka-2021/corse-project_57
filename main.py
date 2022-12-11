@@ -26,14 +26,36 @@ langes = [{'id': 45, 'name': 'Assembly (NASM 2.14.02)'}, {'id': 46, 'name': 'Bas
 
 @app.route('/person', methods = ['GET', 'POST'])
 def personal():
-    cursor.execute("SELECT * FROM table571")
+    cursor.execute("SELECT * FROM table572")
     noun = 0
     f = cursor.fetchone()
     while f:
         noun+=1
         f = cursor.fetchone()
-        print(noun)
     return render_template("lk.html", data = noun)
+
+@app.route('/person/today', methods = ['GET', 'POST'])
+def personal_today():
+    now = datetime.datetime.now()
+    day = now.strftime("%d/%m/%y")
+    todays_subs = []
+    cursor.execute("SELECT * FROM table572 WHERE day=?", (day,))
+    todays_subs.append(cursor.fetchall())
+    print(todays_subs)
+    if todays_subs is None:
+        return render_template('lk.html', datas = "None")
+    else:
+        #task_id = 0;
+        #cols = todays_subs[2]
+        #rows = todays_subs['stdout']
+        #print(todays_subs)
+        return render_template('lk.html', datas = todays_subs)#, task_id=task_id, cols = cols, rows = rows)
+
+    #f = cursor.fetchone()
+    #for i in f:
+    #    if i['day'] is day:
+    #
+    #    f = cursor.fetchone()
 
 @app.route('/', methods = ['GET', 'POST'])
 def index():
@@ -73,12 +95,12 @@ def index():
         """inserting time of submission"""
         now = datetime.datetime.now()
         time = now.strftime("%H:%M:%S")
-        print(time)
+        day = now.strftime("%d/%m/%y")
 
-        cursor.execute("INSERT OR REPLACE INTO table571(des_token, lang, code, input, output, time) VALUES (?, ?, ?, ?, ?, ?)", (decision_tok_n,myCodeLanguage, Cd, myCin, rs, time))
+        cursor.execute("INSERT OR REPLACE INTO table572(des_token, lang, code, input, output, time, day) VALUES (?, ?, ?, ?, ?, ?, ?)", (decision_tok_n, myCodeLanguage, Cd, myCin, rs, time, day))
         conn.commit()
         noun = 0
-        cursor.execute("SELECT * FROM table571")
+        cursor.execute("SELECT * FROM table572")
         f = cursor.fetchone()
         while f:
             noun+=1
@@ -98,9 +120,10 @@ def index():
 
 
 if __name__ == '__main__':
-    cursor.execute("""CREATE TABLE IF NOT EXISTS table571
-    (des_token UNIQUE, lang, code, input, exp_output, output, time)
+    cursor.execute("""CREATE TABLE IF NOT EXISTS table572
+    (des_token UNIQUE, lang, code, input, exp_output, output, time, day)
     """)
     conn.commit()
+
     app.run(debug=True)
 

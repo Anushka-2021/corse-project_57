@@ -10,7 +10,32 @@
 <body>
     <div class="stat">
         <p> You submitted {{ data }} tasks</p>
+        <button onclick="window.location.href = 'http://127.0.0.1:5000/person/today'">See my today's progress</button>
     </div>
-
+    <p>Your todays submissions:</p>
+    {{ datas }}
+    <div class="table">
+        {% for i in datas %}
+            <table>
+                <tr>
+                    <th>token</th>
+                    <th>lang</th>
+                    <th>code</th>
+                    <th>input</th>
+                    <th>exp_output</th>
+                    <th>output</th>
+                    <th>time of decision</th>
+                    <th>day of decision</th>
+                </tr>
+                {% for j in i %}
+                    <tr>
+                        {% for k in j %}
+                            <th>{{ k }}</th>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endfor %}
+    </div>
 </body>
 </html>

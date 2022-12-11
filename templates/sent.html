@@ -7,11 +7,53 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sent</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+        .main_field {
+            margin: 10px;
+        }
+        #code_area {
+            max-width: 700px;
+            width: 500px;
+        }
+        .butt{
+            font-size: 18px;
+            text-color: #000000;
+            height: 30px;
+            border-radius: 5px;
+        }
+
+        header{
+            display: flex;
+            max-width: 1800px;
+        }
+
+        .info{
+            display: inline-block;
+        }
+        button{
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+        }
+
+        .menu{
+            display: inline-block;
+            position: relative;
+            left: 95%;
+        }
+    </style>
 </head>
+
 <body>
-    <div class="basic">
-        <p> Hello! Here we go again..</p>
-    </div>
+    <header>
+        <div class="info">
+            <p>Welcome, {{ uname }}username! </p>
+        </div>
+        <div class="menu">
+            <button onclick="window.location.href = 'http://127.0.0.1:5000/person'">lk</button>
+        </div>
+    </header>
     <div calss="main_field">
         <p>Choose language:</p>
         <form action="/" id="send_code" method="post">
