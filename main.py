@@ -27,10 +27,20 @@ app.secret_key = '1806363f0fmshf3926631702e101p1eda9ajsn5e10975d9be7'
 
 @app.route('/login', methods =['GET', 'POST'])
 def login():
+    #после отправки формы
     if request.method == 'POST':
+        #если не войдено
         if 'username' not in session:
-            session['username'] = request.form['username']
-            return render_template('login.html', deta = 'Hello, ' + request.form['username'], logInfo = 'Logout')
+            username = request.form['username']
+            cursor.execute("SELECT * FROM users_table_1 WHERE username=?", (username,))
+            #если это имя есть в таблице пользователей
+            if cursor.fetchone():
+                session['username'] = username
+                cursor.execute("SELECT role FROM users_table_1 WHERE username=?", (session['username'],))
+                session['role'] = cursor.fetchone()
+                return render_template('login.html', deta = 'Hello, ' + request.form['username'], role = session['role'], logInfo = 'Logout')
+            else:
+                return render_template('login.html', deta = 'You are not registered')
         else:
             return render_template('login.html', deta = 'You are already in as ' + session['username'], logInfo = 'Logout')
     else:
@@ -40,6 +50,33 @@ def login():
 def logout():
     session.pop('username', None)
     return render_template('lk.html', logInfo = 'Login')
+
+@app.route('/register', methods =['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        if 'username' not in session:
+            session['username'] = request.form['username']
+            username = session['username']
+            email = request.form['email']
+            role = request.form['role']
+            cursor.execute("SELECT * FROM users_table_1")
+            noun = 0
+            f = cursor.fetchone()
+            while f:
+                noun+=1
+                f = cursor.fetchone()
+            user_id = noun + 1
+            cursor.execute("INSERT OR REPLACE INTO users_table_1(user_id, username, role, email) VALUES (?, ?, ?, ?)", (user_id, username, role, email))
+            conn.commit()
+            f = cursor.execute("SELECT * FROM users_table_1")
+            for i in f:
+                print(i)
+            print()
+            return render_template('login.html', deta = 'Hello, ' + request.form['username'], role = session['role'], logInfo = 'Logout')
+        else:
+            return render_template('login.html', deta = 'You are already in as ' + session['username'], role = session['role'], logInfo = 'Logout')
+    return render_template('login.html', logInfo = 'Register')
+
 
 @app.route('/person', methods = ['GET', 'POST'])
 def personal():
@@ -135,13 +172,17 @@ def index():
             q = q + 1
         return render_template("sent.html", langs = langes)#, langs = langs)
 
-
-
 if __name__ == '__main__':
     cursor.execute("""CREATE TABLE IF NOT EXISTS table572
     (des_token UNIQUE, lang, code, input, exp_output, output, time, day)
     """)
     conn.commit()
+
+    cursor.execute("""CREATE TABLE IF NOT EXISTS users_table_1
+    (user_id UNIQUE, username, role, password, email)
+    """)
+    conn.commit()
+
 
     app.run(debug=True)
 
