@@ -11,11 +11,6 @@ tok_n = '1806363f0fmshf3926631702e101p1eda9ajsn5e10975d9be7'
 conn = sqlite3.connect("base57.db", check_same_thread=False)
 cursor = conn.cursor()
 
-#cursor.execute("""CREATE TABLE IF NOT EXISTS table57
-#(des_token UNIQUE, lang, code, input, exp_output, output, time)
-#""")
-#conn.commit()
-
 heads = {
     'Content-Type': 'application/json',
     'X-RapidAPI-Key': tok_n,
